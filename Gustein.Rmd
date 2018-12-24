@@ -1,0 +1,148 @@
+---
+title: "For loops and Monte Carlo simulations: using data from 'Teaching & Learning About Displacement in a Chicago Neighborhood High School' "
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Teaching for loops using gentrification as a context
+
+I had the good fortune to attend Dr. Eric Gutstein's presentation titled, "Teaching & Learning About Displacement in a Chicago Neighborhood High School", at the "Creating Balance" conference in San Francisco, CA. The premise seemed simple enough, to model the total amount paid on a 30 year fixed rate mortgage. While he had students use graphing calculators, I saw this as a good opportunity to teach students about the utility of loops in R.
+<https://www.rethinkingschools.org/articles/whose-community-is-this-mathematics-of-neighborhood-displacement>
+
+
+
+```{r}
+
+```
+
+## 30 year fixed rate mortgage
+
+Dr. Gutstein first had students conside a specific case, that of a $150,000 home. With a thirty year fixed mortgage and a 6% annual rate, the monthly payment is $899.93.
+So let's define some variables. Note that the monthly rate is 6% /12 months, or 0.5% / month. I defined the principal as 'loanamt', for reasons that will hopefully make sense later.
+
+
+```{r }
+# 6 percent annual is %.05 monthly!
+
+InterestRate = 0.005  # 5% interest
+loanamt = 150000
+```
+
+## Model over 1 year
+
+Now let's see how the loan amount increases over 1 year:
+
+```{r}
+loanamt = 150000
+for(month in 1:12) {
+  print(month)
+  print("Old loanamt:")
+  print(loanamt)
+  loanamt = loanamt * (1 + InterestRate)  # Same command as above.  
+  print("New loanamt:")
+  print(loanamt)
+}
+```
+
+## What about the payments?!
+I don't own a home but apparently mortgage payments are a thing. Gutstein had his students use the HUD "hardship" guidelines (30 percent of income) to determine a mortgage payment to deduct. The median income in Lawndale was $32,317 a year, resulting in a $807.92 allotment for housing. This gets reflected in the formula below:
+
+```{r}
+loanamt = 150000
+for(month in 1:12) {
+  print(month)
+  print("Old loanamt:")
+  print(loanamt)
+  loanamt = (loanamt-807.92) * (1 + InterestRate)  # Same command as above.  
+  print("New loanamt:")
+  print(loanamt)
+}
+```
+
+## Now we can see what happens after 30 years...
+
+30 years times 12 months= 360 months:
+
+```{r}
+loanamt = 150000
+for(month in 1:360) {
+  print(month)
+  print("Old loanamt:")
+  print(loanamt)
+  loanamt = (loanamt-807.92) * (1 + InterestRate)  # Same command as above.  
+  print("New loanamt:")
+  print(loanamt)
+}
+```
+
+
+## I still owe what?
+
+$87,760 after 30 years. This is after paying $807.92 * 360 months= $290,851.20 over the course of the 30 year loan cycle. Yikes. If you would like a visual, you can create a variable called 'loantracker'. The bounds don't matter, just specify the upper bound as 'Horizon' and define it later to equal 360 (months). 
+
+```{r}
+loanamt = 150000
+Horizon = 360
+
+loantracker = rep(0, Horizon)
+
+```
+
+
+```{r}
+for(month in 1:Horizon) {
+InterestRate = 0.005
+loanamt = (loanamt-807.92) * (1 + InterestRate)
+loantracker[month] = loanamt
+}
+plot(loantracker)
+```
+
+
+## What about subprime mortgages?
+
+There has been a great deal of talk about the role of subprime mortgages and other predatory forms of lending in low-income and minority communities leading up the 2008 recession. So called "NINJA" loans often used "teaser rates", or variable interest loans. (NINJA stands for "no income, no job, no assets") The first few years have a very, very, low interest rate. Then it becomes much higher. To model this you can create a block for each interest rate. 
+
+## What about adjusted interest rates?
+
+Other mortgages 
+The true power or Monte Carlo simulations is that you can randomly sample the interest rate from a  vector of interest rates, given a range, etc. A good extension might be to include some variablility in the interest rate. First we create a vector of possible interest rates, followed by a vector of probabiities of each interest rate occuring.
+
+```{r}
+
+outcome_values = c(.003, 0.004,0.0045,0.005)  # the possible interest rates
+outcome_probs = c(.25, .25, .25,.25)  # the probabilities of each one
+
+```
+
+Now we can use these vectors in our loop. Note that the interest rate is no longer defined as a number within the loop, it is now randomly sampling one of the interest rates in the vector for each month. This is, of course, not realistic due to rates not changing monthly.You could change the horizons to years instead of months, and sample from a range of values of known interest rates to make it more realistic. Note that this plot is a bit more "squiggly" due to the different interest rates.
+
+```{r}
+loanamt = 150000
+Horizon = 360
+
+loantracker = rep(0, Horizon)
+
+for(month in 1:Horizon) {
+InterestRate = sample(outcome_values, size = 1, prob = outcome_probs)
+loanamt = (loanamt-807.92) * (1 + InterestRate)
+loantracker[month] = loanamt
+}
+plot(loantracker)
+```
+
+
+## Extension activities:
+
+These types of high apr loans are coming back with a vengeance:
+<https://www.cnbc.com/2018/04/12/sub-prime-mortgages-morph-into-non-prime-loans-and-demand-soars.html>
+
+There are a million different ways to extend this activity. I think it's interesting to see what happens to our model when you pick a slightly higher interest rate, like .07% monthly. The loanamt stops decreasing! You actually end up owing more than the principal. Overall, this is a simple way to introduce "for" loops while showing their necessity for models that involve updating.
+
+
+
+Shout out to Dr. James Scott, got the idea for this while going through some of his R tutorials in class.
+
