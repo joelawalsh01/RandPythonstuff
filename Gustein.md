@@ -1,4 +1,4 @@
-For loops and Monte Carlo simulations: using data from 'Teaching & Learning About Displacement in a Chicago Neighborhood High School'
+For loops and Monte Carlo Simulations: Using Data from 'Teaching & Learning About Displacement in a Chicago Neighborhood High School'
 ================
 
 Teaching for loops using gentrification as a context
@@ -2013,7 +2013,7 @@ loantracker[month] = loanamt
 plot(loantracker)
 ```
 
-![](Gustein_files/figure-markdown_github/unnamed-chunk-7-1.png)
+![](unnamed-chunk-7-1.png)
 
 What about subprime mortgages?
 ------------------------------
@@ -2046,7 +2046,7 @@ loantracker[month] = loanamt
 plot(loantracker)
 ```
 
-![](Gustein_files/figure-markdown_github/unnamed-chunk-9-1.png)
+![](unnamed-chunk-9-1.png)
 
 Extension activities:
 ---------------------
