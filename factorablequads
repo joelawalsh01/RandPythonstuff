@@ -1,0 +1,27 @@
+def isfactorable(a, b, c):
+    if a * c == d * e and (d + e) == b:
+        return 1
+
+#set upper and lower boundaries for a, b, c. Changee these however you see fit.
+dupper=  11
+dlower = 1
+eupper = 11
+elower = 1
+aupper = 11
+alower = 1
+bupper = 21
+blower = 1
+cupper = 11
+clower = 1
+    
+count = 0
+
+for d in range (dlower,dupper):
+    for e in range (elower,eupper):
+        for a in range(alower,aupper):
+            for b in range (blower,bupper):
+                for c in range (clower,cupper):
+                    if isfactorable(a,b,c)==1:
+                        count +=1
+                         print( a, "x^2 + ", b, "x + ", c, " , Count = ", count)
+                        
