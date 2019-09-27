@@ -1,4 +1,6 @@
 ### Python3
+##This will generate factorable quadratics, given whatever values of a,b, and c you would like to constrain the problems to.
+Happy factoring!
 
 
 def isfactorable(a, b, c):
