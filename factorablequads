@@ -1,3 +1,6 @@
+### Python3
+
+
 def isfactorable(a, b, c):
     if a * c == d * e and (d + e) == b:
         return 1
