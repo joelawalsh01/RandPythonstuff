@@ -5,7 +5,7 @@ def isfactorable(a, b, c):
     if a * c == d * e and (d + e) == b:
         return 1
 
-#set upper and lower boundaries for a, b, c. Changee these however you see fit.
+#set upper and lower boundaries for a, b, c. Change these however you see fit.
 dupper=  11
 dlower = 1
 eupper = 11
