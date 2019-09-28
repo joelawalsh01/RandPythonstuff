@@ -6,6 +6,11 @@ Happy factoring!
 def isfactorable(a, b, c):
     if a * c == d * e and (d + e) == b:
         return 1
+## If you want to eliminate cases where d and e are equal to a and c 
+##(Ex: 7x^ + 11x+ 4, d= 7 and e = 4 so it's a little too easy to solve) add this logic into the above function definition: 
+## "and d !=a and d!=c and e!=a and e!=c: "
+
+
 
 #set upper and lower boundaries for a, b, c inside of the range() part of the for loops. Change these however you see fit.
 
